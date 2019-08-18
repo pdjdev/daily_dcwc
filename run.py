@@ -97,12 +97,12 @@ while (True):
                 wc_title.to_file('title.png')
                 wc_nick.to_file('nick.png')
 
-                hotkey = list(wc_title.words_)[0]
+                hotkey = sorted(wc_title.words_.items(), key=(lambda x: x[1]), reverse = True)[0][0]
                 hotnick = ''
                 
-                for n in list(wc_nick.words_):
-                    if n != 'ㅇㅇ':
-                        hotnick = n
+                for n in sorted(wc_nick.words_.items(), key=(lambda x: x[1]), reverse = True):
+                    if n[0] != 'ㅇㅇ':
+                        hotnick = n[0]
                         break
                 
 
@@ -259,7 +259,7 @@ while (True):
         # 제목 입력
         print('글 제목 입력중...')
         driver.find_element_by_name('subject').send_keys(title)
-        #driver.execute_script("window.scrollTo(0, 100)")
+        driver.execute_script("window.scrollTo(0, 100)")
 
         # HTML으로 쓰기 방식 변경
         print('HTML 글쓰기 방식 변경...')
