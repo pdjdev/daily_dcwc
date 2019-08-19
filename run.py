@@ -5,6 +5,12 @@ from wordcloud import WordCloud
 from base64 import b64encode
 from datetime import datetime, timedelta
 
+def midReturn(val, s, e):
+    if s in val:
+        val = val[val.find(s)+len(s):]
+        if e in val: val = val[:val.find(e)]
+    return val
+
 taskdone = False
 trial = 0
 waittime = 60
@@ -90,24 +96,27 @@ while (True):
                 print()
                 print('워드클라우드 생성 중... [1/2]')
                 wc_title = WordCloud(font_path=fontpath, width=1200, height=1000, background_color='white').generate(tdata)
+                #닉네임 비활성화
+                '''
                 print('워드클라우드 생성 중... [2/2]')
                 wc_nick = WordCloud(font_path=fontpath, width=1200, height=1000, background_color='white').generate(ndata)
+                '''
 
                 print('이미지 저장 중...')
                 wc_title.to_file('title.png')
-                wc_nick.to_file('nick.png')
+                #wc_nick.to_file('nick.png')
 
                 hotkey = sorted(wc_title.words_.items(), key=(lambda x: x[1]), reverse = True)[0][0]
-                hotnick = ''
-                
+                #hotnick = ''
+                '''
                 for n in sorted(wc_nick.words_.items(), key=(lambda x: x[1]), reverse = True):
-                    if n[0] != 'ㅇㅇ':
+                    if n[0] != 'ㅇㅇ': #유동닉(ㅇㅇ) 거르기
                         hotnick = n[0]
                         break
-                
+                '''
 
                 print('오늘의 핵심 키워드:', hotkey)
-                print('오늘의 잉여 닉네임:', hotnick)
+                #print('오늘의 잉여 닉네임:', hotnick)
 
                 print('저장 완료')
                 taskdone = True
@@ -149,7 +158,9 @@ while (True):
                     )
 
                     t_img = json.loads(r.text)['data']['link']
-
+                    
+                    #닉네임 비활성화
+                    '''
                     print('이미지 업로드 중... [2/2]')
                     r = requests.post(
                         url, 
@@ -164,35 +175,14 @@ while (True):
                     )
 
                     n_img = json.loads(r.text)['data']['link']
+                    '''
 
-
-                    page_source='''<p><span style="font-family: Arial, sans-serif; font-size: 14pt;">오늘의 [gallid] 갤러리 단어 클라우드</span></p>
-                    <p><br></p><span style="font-family: Arial, sans-serif;">
-                    </span><img src="[title_image]"><p></p>
-                    <p><span style="font-family: Arial, sans-serif; font-size: 10pt;">※ 단어가 클수록 빈도가 높습니다</span></p>
-                    <p><br></p>
-                    <p><span style="font-family: Arial, sans-serif; font-size: 14pt;">오늘의 핵심 키워드: <b>[hotkey]</b></span></p>
-                    <p><br></p>
-                    <p><br></p>
-                    <p><br></p>
-                    <p><span style="font-family: Arial, sans-serif; font-size: 14pt;">오늘의 [gallid] 갤러리 갤러 클라우드</span></p>
-                    <p><br></p><span style="font-family: Arial, sans-serif;">
-                    </span><img src="[nick_image]"><p></p>
-                    <p><br></p>
-                    <p><span style="font-family: Arial, sans-serif;">※ 단어가 클수록 폐인입니다</span></p>
-                    <p><br></p>
-                    <p><span style="font-family: Arial, sans-serif; font-size: 14pt;">오늘의 폐인 갤러: <b>[hotnick]</b></span><br></p>
-                    <p><br></p>
-                    <p><br></p>
-                    <p><br></p>
-                    <p style="text-align: right;"><span style="font-family: Arial, sans-serif; font-size: 9pt; color: rgb(116, 116, 116);">본 게시글은 자동 작성되었습니다</span></p>'''
-
-
+                    page_source = open('orgpage.txt', 'r').read()
                     page_source = page_source.replace('[gallid]', gid)
                     page_source = page_source.replace('[title_image]', t_img)
-                    page_source = page_source.replace('[nick_image]', n_img)
+                    #page_source = page_source.replace('[nick_image]', n_img)
                     page_source = page_source.replace('[hotkey]', hotkey)
-                    page_source = page_source.replace('[hotnick]', hotnick)
+                    #page_source = page_source.replace('[hotnick]', hotnick)
 
                     open('page.txt', 'w').write(page_source)
 
