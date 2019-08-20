@@ -40,6 +40,8 @@ while (True):
 
         #날짜 갱신
         open('lastupd.txt', 'w').write(datetime.now().strftime('%Y-%m-%d'))
+        
+        taskdone = False
 
         while not taskdone and trial < 5:
             try:
