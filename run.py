@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 from bs4 import BeautifulSoup
-import requests, lxml, os, time, requests, json
+import requests, lxml, os, time, json
 from wordcloud import WordCloud
 from base64 import b64encode
 from datetime import datetime, timedelta
