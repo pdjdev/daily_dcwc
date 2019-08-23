@@ -199,6 +199,7 @@ if taskdone:
 
     #크롬 드라이버 로드
     print('chromedriver 로드...')
+    #웹드라이버 불러오기 - Windows의 경우 웹드라이버를 받은 후 같은 디렉토리에 넣은 후 
     driver = webdriver.Chrome('/usr/lib/chromium-browser/chromedriver', options=options)
     driver.implicitly_wait(3)
 
