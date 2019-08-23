@@ -1,3 +1,5 @@
+![image](image.png)
+
 # daily_dcwc
 일일 갤러리 워드클라우드 자동생성/작성 스크립트
 
