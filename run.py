@@ -247,7 +247,7 @@ if taskdone:
     time.sleep(1)
     #웹페이지 닫기
     print('작업 마무리중...')
-    driver.close()
+    driver.quit()
 
     display.sendstop()
     display.stop()
